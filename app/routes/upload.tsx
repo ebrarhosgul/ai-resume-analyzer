@@ -9,7 +9,7 @@ import { generateUUID } from "~/lib/utils"
 
 const Upload = () => {
     const { auth, isLoading, fs, ai, kv } = usePuterStore()
-    const navigae = useNavigate()
+    const navigate = useNavigate()
     const [isProcessing, setIsProcessing] = useState(false)
     const [statusText, setStatusText] = useState('')
     const [file, setFile] = useState<File | null>(null)
@@ -84,6 +84,8 @@ const Upload = () => {
         await kv.set(`resume: ${uuid}`, JSON.stringify(data))
 
         setStatusText('Analysis complete, redirecting...')
+
+        navigate(`resume/${uuid}`)
     }
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
