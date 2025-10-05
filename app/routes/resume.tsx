@@ -7,7 +7,7 @@ import { usePuterStore } from "~/lib/puter"
 
 export const meta = () => ([
     { title: 'Resumind | Review' },
-    {name: 'description', content: 'Detailed overview of your resume' },
+    { name: 'description', content: 'Detailed overview of your resume' },
 ])
 
 const Resume = () => {
@@ -40,7 +40,7 @@ const Resume = () => {
                 return
             }
 
-            const pdfBlob = new Blob([resume], { type: 'application/pdf'})
+            const pdfBlob = new Blob([resumeBlob], { type: 'application/pdf'})
             const resumeUrl = URL.createObjectURL(pdfBlob)
 
             setResumeUrl(resumeUrl)
@@ -54,7 +54,6 @@ const Resume = () => {
             const imageUrl = URL.createObjectURL(imageBlob)
 
             setImageUrl(imageUrl)
-
             setFeedback(data.feedback)
         }
 

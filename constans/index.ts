@@ -143,6 +143,7 @@ export const resumes: Resume[] = [
     jobDescription: string;
   }) =>
     `You are an expert in ATS (Applicant Tracking System) and resume analysis.
+    Take today’s date as "${Date()}" and evaluate the experience dates accordingly.
     Please analyze and rate this resume and suggest how to improve it.
     The rating can be low if the resume is bad.
     Be thorough and detailed. Don't be afraid to point out any mistakes or areas for improvement.
