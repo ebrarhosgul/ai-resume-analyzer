@@ -1,64 +1,64 @@
-import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router"
-import ATS from "~/components/ATS"
-import Details from "~/components/Details"
-import Summary from "~/components/Summary"
-import { usePuterStore } from "~/lib/puter"
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router";
+import ATS from "~/components/ATS";
+import Details from "~/components/Details";
+import Summary from "~/components/Summary";
+import { usePuterStore } from "~/lib/puter";
 
 export const meta = () => ([
     { title: 'Resumind | Review' },
     { name: 'description', content: 'Detailed overview of your resume' },
-])
+]);
 
 const Resume = () => {
-    const { auth, isLoading, fs, kv } = usePuterStore()
-    const { id } = useParams()
-    const [imageUrl, setImageUrl] = useState('')
-    const [resumeUrl, setResumeUrl] = useState('')
-    const [feedback, setFeedback] = useState<Feedback | null>(null)
-    const navigate = useNavigate()
+    const { auth, isLoading, fs, kv } = usePuterStore();
+    const { id } = useParams();
+    const [imageUrl, setImageUrl] = useState('');
+    const [resumeUrl, setResumeUrl] = useState('');
+    const [feedback, setFeedback] = useState<Feedback | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!isLoading && !auth.isAuthenticated) {
-            navigate(`/auth?next=/resume/${id}`)
+            navigate(`/auth?next=/resume/${id}`);
         }
-    }, [isLoading])
+    }, [isLoading]);
 
     useEffect(() => {
         const loadResume = async () => {
-            const resume = await kv.get(`resume:${id}`)
+            const resume = await kv.get(`resume:${id}`);
 
             if (!resume) {
-                return
+                return;
             }
 
-            const data = JSON.parse(resume)
+            const data = JSON.parse(resume);
 
-            const resumeBlob =  await fs.read(data.resumePath)
+            const resumeBlob = await fs.read(data.resumePath);
 
             if (!resumeBlob) {
-                return
+                return;
             }
 
-            const pdfBlob = new Blob([resumeBlob], { type: 'application/pdf'})
-            const resumeUrl = URL.createObjectURL(pdfBlob)
+            const pdfBlob = new Blob([resumeBlob], { type: 'application/pdf' });
+            const resumeUrl = URL.createObjectURL(pdfBlob);
 
-            setResumeUrl(resumeUrl)
+            setResumeUrl(resumeUrl);
 
-            const imageBlob = await fs.read(data.imagePath)
+            const imageBlob = await fs.read(data.imagePath);
 
             if (!imageBlob) {
-                return
+                return;
             }
 
-            const imageUrl = URL.createObjectURL(imageBlob)
+            const imageUrl = URL.createObjectURL(imageBlob);
 
-            setImageUrl(imageUrl)
-            setFeedback(data.feedback)
-        }
+            setImageUrl(imageUrl);
+            setFeedback(data.feedback);
+        };
 
-        loadResume()
-    },[id])
+        loadResume();
+    }, [id]);
 
     return (
         <main className="!pt-0">
@@ -92,7 +92,7 @@ const Resume = () => {
                 </section>
             </div>
         </main>
-    )
-}
+    );
+};
 
-export default Resume
+export default Resume;

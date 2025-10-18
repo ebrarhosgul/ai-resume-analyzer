@@ -28,7 +28,7 @@ const WipeApp = () => {
         });
         await kv.flush();
 
-        navigate("/")
+        navigate("/");
         loadFiles();
     };
 
