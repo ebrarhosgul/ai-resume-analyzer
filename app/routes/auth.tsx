@@ -19,6 +19,20 @@ const Auth = () => {
         }
     }, [auth.isAuthenticated, next]);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+          const dialog = document.querySelector("puter-dialog");
+
+          if (dialog) {
+            dialog.remove();
+
+            clearInterval(interval);
+          }
+        }, 500);
+      
+        return () => clearInterval(interval);
+      }, []);
+
     return (
         <main className="bg-[url('/images/bg-auth.svg')] bg-cover min-h-screen flex items-center justify-center">
             <div className="gradient-border shadow-lg">
